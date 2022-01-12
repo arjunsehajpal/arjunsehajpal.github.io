@@ -1,0 +1,61 @@
+baseurl = ""
+title = "Arjun's Blog"
+theme = "hugo-coder"
+languageCode = "en"
+defaultContentLanguage = "en"
+paginate = 20
+canonifyUrls = true
+colorscheme = "dark"
+
+[markup]
+	[markup.highlight]
+		codeFences = true
+		style = "bw"
+		guessSyntax = false
+
+[params]
+    author = "Arjun Sehajpal"
+    info = "I blog about Data Science and Machine Learning"
+    description = "A blog about Data Science and Machine Learning"
+    keywords = "blog, data science, machine learning, data engineering"
+    avatarurl = "images/avatar.jpg"
+
+    favicon_32 = "/img/favicon-32x32.png"
+    favicon_16 = "/img/favicon-16x16.png"
+
+    footercontent = "Tech, tips and stuff"
+
+    hidecredits = true
+    hidecopyright = true
+
+    rtl = false
+
+    math = true
+    custom_css = ["css/custom.css"]
+
+# Social links
+[[params.social]]
+    name = "Github"
+    icon = "fa fa-github fa-2x"
+    weight = 1
+    url = "https://github.com/arjunsehajpal/"
+[[params.social]]
+    name = "Twitter"
+    icon = "fa fa-twitter fa-2x"
+    weight = 3
+    url = "https://twitter.com/sehajpalarjun/"
+[[params.social]]
+    name = "LinkedIn"
+    icon = "fa fa-linkedin fa-2x"
+    weight = 3
+    url = "https://linkedin.com/in/arjunsehajpal/"
+
+# Menu links
+[[menu.main]]
+    name = "Blog"
+    weight = 1
+    url  = "/posts/"
+[[menu.main]]
+    name = "About"
+    weight = 2
+    url = "/about/"
