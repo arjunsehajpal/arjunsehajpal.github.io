@@ -72,6 +72,25 @@ A typical machine learning training pipeline consists of feeding the data into a
 To distribute this whole pipeline, we can break the model into small “functional units”, which are independent in nature and can be recomposed to get the result. These distinct functional units can be executed in parallel to speed up the whole training process. The other way could be to do this on decomposition on the data front, where data is divided into small chunks and multiple machines perform the same computations, but on different data chunks.
 
 ## System Level NFRs
-TBC
+### Scalability
+Scalability is every developer’s dream problem. It generally answers the question that whether the system can handle a spike in traffic while not causing any damage to the user experience.
 
+Scalability is a good problem to have as it communicates loud and clear that everything else is going well. But it is also the trickiest NFR. This is because one is never sure when one should begin to accommodate it in the product architecture. Too early and it might turn out to be a YAGNI (you never gonna need it) situation. Too late and things are beyond repair. So, when one should think about it? There’s a cliche that one should start thinking about scalability before a single line of code is written. According to me, this is not pragmatic. At a very early stage, experimentation with new features should be the top priority. Once the product is stable and one can start making provisions for this NFR. Also, it is very crucial to not take too much technical debt along the way. Following “good” code practices like TDD, uniform code standards, etc. can be really helpful here.
 
+While designing a scalable solution, one can keep the following pointers in mind:-
+- Use caching extensively as caching imparts a sense of a highly scalable solution and gives better output in high-demand situations, without wasting computing resources. Based on the situation, one can implement a browser cache or database cache.
+- Use Content Delivery Networks (CDN) because they make applications scale faster without any code-level changes.
+- Use load balancer and enable auto-scaling. With the advent of the cloud, enabling these services has never been easier.
+- Use messaging mechanism of any type of async operations.
+
+### Performance
+Often confused with scalability, this NFR indicates the responsiveness of a system to execute any action within a given interval of time. It deals with the properties like speed, throughput, and responsiveness. To test the performance of the system, one can track metrics like average response time, request rates, and error rates to get a holistic view of how the system is performing.
+
+### Flexibility and Technology agnosticism
+Flexibility or extensibility measures the ability of a system to extend its functionality against the level of effort required to implement the extension. One should avoid vendor lock-ins and keep their system technologically agnostic in order to increase its extensibility coefficient. 
+
+### Observability or Monitoring
+Observability is the measure of how well the internal states of a system can be inferred from the knowledge of its external output. High-quality sleep and observability are highly correlated. Implementing observability lets you sleep peacefully at night. Moreover, it helps in tackling bugs faster as it provides us the information to track where they are coming from. 
+
+### Conclusion
+In software engineering, there are numerous other NFRs that differ from use-case to use-case. The challenge is not only to identify the right NFRs for your product but also to identify the order in which they are to be implemented. There is no manual for this and this is where experience plays a huge role.

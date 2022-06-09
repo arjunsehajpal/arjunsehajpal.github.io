@@ -4,7 +4,7 @@ title = "Model Calibration: What, Why, and How?"
 date = "2022-02-09"
 description = "A detailed introduction to Model Calibration"
 tags = [
-    "classification"
+    "Classification"
 ]
 +++
 Depending upon the nature of the problem and the functioning of the model, the format in which output is provided can differ from model to model. For instance, in a multiclass classification problem, a decision tree provides a label, which is narrowed down going down the tree, where each node reduces the set of possible outcomes to one. On the contrary, the neural networks provide a vector of continuous values, which is calculated by applying non-linear transformations on the input vector. In the latter case, we have to transform the output vector to a single label (here, looking at you, argmax).  Here, there might be a temptation to use these values as the confidence of the model in each label class. After all, isn’t the model that has twice the confidence in the label class for which output is 0.6 to the label class for which the output is 0.3? NO. Not until the model is calibrated.
