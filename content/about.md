@@ -11,5 +11,3 @@ Hi! I am Arjun Sehajpal. I ply my trade as a Data Scientist at [ZS](https://www.
 I love Time-Series and Causal-ML problems and have a keen interest in MLOPs. I code mostly in Python, but currently also learning JavaScript and Clojure.
 
 Apart from work, I like to read ([here's what I am currently reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading)), go stargazing, and sometimes write short stories and poems. 
-
-## Contact
