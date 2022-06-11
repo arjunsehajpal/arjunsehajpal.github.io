@@ -15,7 +15,7 @@ colorscheme = "dark"
 
 [params]
     author = "Arjun Sehajpal"
-    info = "I blog about Data Science and Machine Learning"
+    info = "Learning to make Machine Learning work in real world"
     description = "A blog about Data Science and Machine Learning"
     keywords = "blog, data science, machine learning, data engineering"
     avatarurl = "images/avatar.jpg"
