@@ -1,13 +1,13 @@
 +++ 
 author = "Arjun Sehajpal"
-title = "Model Calibration: What, Why, and How?"
+title = "Model Calibration 01: Intuition"
 date = "2022-02-09"
 description = "A detailed introduction to Model Calibration"
 tags = [
     "Classification"
 ]
 +++
-Depending upon the nature of the problem and the functioning of the model, the format in which output is provided can differ from model to model. For instance, in a multiclass classification problem, a decision tree provides a label, which is narrowed down going down the tree, where each node reduces the set of possible outcomes to one. On the contrary, the neural networks provide a vector of continuous values, which is calculated by applying non-linear transformations on the input vector. In the latter case, we have to transform the output vector to a single label (here, looking at you, argmax).  Here, there might be a temptation to use these values as the confidence of the model in each label class. After all, isn’t the model that has twice the confidence in the label class for which output is 0.6 to the label class for which the output is 0.3? NO. Not until the model is calibrated.
+Depending upon the nature of the problem and the functioning of the model, the format in which output is provided can differ from model to model. For instance, in a multiclass classification problem, a decision tree provides a label, which is narrowed down going down the tree, where each node reduces the set of possible outcomes to one. On the contrary, the neural networks provide a vector of continuous values calculated by applying non-linear transformations to the input vector. In the latter case, we have to transform the output vector to a single label (here, looking at you, argmax).  Here, there might be a temptation to use these values as the confidence of the model in each label class. After all, isn’t the model that has twice the confidence in the label class for which output is 0.6 to the label class for which the output is 0.3? NO. Not until the model is calibrated.
 
 Calibration is a post-processing technique used to improve the probability estimate of an already trained model, in order to improve its performance. For instance, among the samples that have a 0.8 probability of belonging to a particular class, we want at least 80% of them to be true.
 A model is perfectly calibrated if, for any p, a prediction of a class with confidence p is correct 100*p times out of 100.
@@ -34,23 +34,16 @@ Now that we know calibration is a thing, how do we know whether our model requir
 For the sake of this example, I will be using Breast Cancer Dataset. This data is readily available in Scikit Learn Dataset API and can be imported as follow:-
 
 ```
+import pandas as pd
+from sklearn.datasets import load_breast_cancer
+
 bcd = load_breast_cancer()
-df = pd.DataFrame(data=bcd.data, columns=bcd.feature_names)
+df = pd.DataFrame(
+    data=bcd.data,
+    columns=bcd.feature_names
+)
 df["target"] = bcd.target
- 
-df.sample(5)
 ```
-
-|     |   mean radius |   mean texture |   mean perimeter |   mean area |   target |
-|----:|--------------:|---------------:|-----------------:|------------:|---------:|
-| 560 |        14.05  |          27.15 |            91.38 |       600.4 |        1 |
-| 447 |        14.8   |          17.66 |            95.88 |       674.8 |        1 |
-| 314 |         8.597 |          18.6  |            54.09 |       221.2 |        1 |
-| 266 |        10.6   |          18.95 |            69.28 |       346.4 |        1 |
-| 444 |        18.03  |          16.85 |           117.5  |       990   |        0 |
-
-
-
 
 The label is a binary variable, 0 and 1, where 0 stood for benign and 1 for malignant tumor. The aim here is to train a simple Random Forest Classifier and plot the corresponding calibration curve. For simplification, I am doing a random train-test split and “fitting” an RF Classifier. As we require probabilistic predictions for plotting the calibration curves, we are calling the `predict_proba` method on the trained model object.
 
@@ -60,14 +53,19 @@ from sklearn.ensemble import RandomForestClassifier
 feature_df = df.drop(columns=["target"])
 target_df = df["target"]
  
-x_train, x_test, y_train, y_test = train_test_split(feature_df, target_df, test_size=0.2, random_state=19)
+x_train, x_test, y_train, y_test = train_test_split(
+    feature_df,
+    target_df,
+    test_size=0.2,
+    random_state=19
+)
  
 RF = RandomForestClassifier(random_state=19)
 rf_classifier = RF.fit(x_train, y_train)
 rf_preds = rf_classifier.predict_proba(x_test)
 ```
 
-Once the class probabilities are captured, the next step would be to compute the bins for the calibration plot. One can use Scikit-learn’s `calibration_curve` method to compute the true and predicted probabilities for a calibration curve. This method, discretize the probability range of [0, 1] into a number of bins, mentioned in parameter `n_bins`, passed in the aforementioned method. Here, we are creating 10 bins:-
+Once the class probabilities are captured, the next step would be to compute the bins for the calibration plot. One can use Scikit-learn’s `calibration_curve` method to compute the true and predicted probabilities for a calibration curve. This method, discretize the probability range of [0, 1] into a number of bins, mentioned in parameter `n_bins`, passed in the method above. Here, we are creating 10 bins:-
 
 ```
 cal_y, cal_x = calibration_curve(y_test, rf_preds[:, 1], n_bins=10)
@@ -106,6 +104,36 @@ bin_total(y_test, rf_preds[:,1], n_bins=10)
 
 As we can see from the above result, most of the predictions are either near 0 or 1. Very few are in the maybe category. So, the above model is a good discriminator, but poorly calibrated. 
 
+
 {{< notice note >}} 
 The trade-off between discrimination and calibration can depend on the final aim of the model. If the goal is to build a model that takes automatic decisions, discrimination can be preferred, and if the goal is to provide statistical estimates, calibration should be preferred. 
 {{< /notice >}}
+
+
+##### Why is binning required?
+As in the equation above, the probability can't be computed using a finite number of samples, since $\widehat{P}$ is a continuous random variable. Therefore, to empirically measure the model's calibration, several statistics techniques are designed and binning is one such technique. By binning samples, we can calculate expected sample accuracy as a function of confidence, while reducing the effects of minor observation errors. It is required for bins to have equal width to ensure plot readability.
+
+### Point Estimates of Calibration
+While Calibration Plots are a reliable visual tools, it is equally important to have a scaler summary statistics for calibration. We discuss two of such methods.
+
+#### 1. Expected Calibration Error
+Expected Calibration Error (ECE) measures the difference in expected accuracy and expected confidence. Mathematically, 
+$$
+\mathbb{E}_{\widehat{P}}[|\mathbb{P}(\widehat{Y} = Y | \widehat{P} = p) - p|]
+$$
+
+In practise, ECE can be calculated by partitioning the predictions into M equally-spaced bins (as we did in Calibration Plots) and taking a weighted average of bins’ accuracy and confidence difference. This can be denoted as:- 
+$$
+ECE = \sum_{m=1}^{M} \frac{|B_m|}{n} |acc(B_m) - conf(B_m)|
+$$
+
+Here, $n$ is total number of bins. For perfect calibration, ECE should be $0$. Hence, $acc(B_m)$ should be equal to $conf(B_m)$.
+
+#### 2. Maximum Calibration Error
+Maximum Calibration Error (MCE) is preferred in the high-risk application where reliable confidence measures are absolutely necessary. Empirically, MCE can be defined as follow:-
+$$
+MCE = max_{m \in [1 ... M]} |acc(B_m) - conf(B_m)|
+$$
+
+## Conclusion
+In this post, we tried to establish what is the intuition behind the Calibration, why it is important and how can we measure it. In the continuation of this post, we will ponder over the techniques that can effectively remedy the miscalibration.
