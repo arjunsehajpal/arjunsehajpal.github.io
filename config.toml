@@ -40,11 +40,6 @@ colorscheme = "dark"
     weight = 1
     url = "https://github.com/arjunsehajpal/"
 [[params.social]]
-    name = "Twitter"
-    icon = "fa fa-twitter fa-2x"
-    weight = 3
-    url = "https://twitter.com/sehajpalarjun/"
-[[params.social]]
     name = "LinkedIn"
     icon = "fa fa-linkedin fa-2x"
     weight = 3
