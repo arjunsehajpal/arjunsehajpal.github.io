@@ -8,6 +8,6 @@ author = "Arjun Sehajpal"
 
 Hi! I am Arjun Sehajpal. I ply my trade as a Data Scientist at [ZS](https://www.zs.com/), working on Personalization Systems where my responsibilities include building end-to-end Machine Learning workflows. Previously, I worked at [Pluto7](https://pluto7.com/) as a Machine Learning Engineer, where I worked on developing Demand Forecasting and Supply Chain Optimization solutions, which were deployed on Google Cloud. 
 
-I love Time-Series and Causal-ML problems and have a keen interest in MLOPs. I code mostly in Python, but currently also learning JavaScript and Clojure.
+I have a keen interest in MLOps, time-series forecasting and Causal-ML. I code mostly in Python, but currently I am also learning Go.
 
-Apart from work, I like to read ([here's what I am currently reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading)), go stargazing, and sometimes write short stories and poems. 
+Apart from being a Data Scientist, I am also a reader ([here's what I am currently reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading)), armchair philosopher, and an amateur investor.
