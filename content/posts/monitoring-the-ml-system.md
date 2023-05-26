@@ -1,13 +1,11 @@
 +++ 
-draft = false
-date = 2023-05-26T00:38:16+05:30
-title = "Monitoring the Machine Learning Systems"
-description = ""
-slug = ""
-tags = ["MLOps"]
-categories = []
-externalLink = ""
-series = []
+author = "Arjun Sehajpal"
+title = "Monitoring the Machine Learning System"
+date = "2023-05-26"
+description = "A detailed introduction to Model Calibration"
+tags = [
+    "MLOPs"
+]
 +++
 Almost every Machine Learning pipeline starts from the raw data and ends at decisions. Any amount of bad data can lead to faulty decisions, which could further lead to loss of business (and in some cases, organisation’s reputation). As the data pipelines grow more and more complex, it becomes increasingly important to have a robust monitoring and observability structure in place. Neglecting this component results in monitoring debt, which is paid back in Developer’s time.
 
