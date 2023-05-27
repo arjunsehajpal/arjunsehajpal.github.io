@@ -1,6 +1,6 @@
 +++ 
 author = "Arjun Sehajpal"
-title = "Model Calibration 01: Intuition"
+title = "Model Calibration: Intuition and Implementation"
 date = "2022-02-09"
 description = "A detailed introduction to Model Calibration"
 tags = [

@@ -1,7 +1,7 @@
 +++ 
 draft = false
 date = 2022-12-11T00:38:16+05:30
-title = "Conway’s Law: How much influence does it really carry?"
+title = "On Conway’s Law"
 description = ""
 slug = ""
 tags = ["Product-Management"]
