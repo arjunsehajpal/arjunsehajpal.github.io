@@ -21,4 +21,33 @@ Like financial debt, monitoring debt can be a good thing. But repaying monitorin
 It is best to have **yes** as an answer to the first scenario, because if the old developers didn’t have time to put proper monitoring and logging in place, you can’t expect much from documentation either.
 
 If one doesn’t want to end up in these scenarios, it is best to embrace the three truths about monitoring.
-1. <u>Monitoring is high-skilled activity</u> - As stated above, to enable monitoring in a system requires one to have clear knowledge of monitoring goals and monitoring mechanism. The former requires in-depth knowledge of the functioning of the system to be monitored, while the latter requires knowledge of how to instrument the system.
+1. *Monitoring is high-skilled activity* - As stated above, to enable monitoring in a system requires one to have clear knowledge of monitoring goals and monitoring mechanism. The former requires in-depth knowledge of the functioning of the system to be monitored, while the latter requires knowledge of how to instrument the system.
+2. *Monitoring is best done fresh* - Retrofitting logging statements into your code doesn’t work well as it could lead to compatibility issues. These compatibility issues might demand code changes as well. Hence, the longer a system goes without monitoring, the harder it becomes to introduce monitoring.
+3. *ML monitoring doesn’t equal traditional monitoring* - Traditional monitoring techniques don't work in Machine Learning pipelines interacting with data, which is not under your control.
+
+# Embracing the Monitoring
+Monitoring a machine learning pipeline often boils down to tying together the disparate elements of quality analysis. These quality analyses shouldn't just stop at data. A holistic monitoring system should run quality checks on data, but shouldn't just limit itself to it. It should also monitor the health of pipelines and drift the model is experiencing. Hence, a monitoring pipeline should have three components:
+1. Data Quality Monitoring
+2. Pipeline Health Monitoring
+3. Model Drift Monitoring
+
+## Data Quality Monitoring
+The term “data quality” is context dependent. Whether a data is a quality dataset depends upon the purpose it is being served for. Data that captures firmographic details of all customers might be good for Dashboards, but might not be good for training a model. Similarly, a dataset capturing embeddings might be of no use to Business Analysts working on PowerBI, despite being a goldmine for Data Scientist. So, in this situation, it is really weird to stamp some arbitrary percentage number onto the data, communicating how much “quality” it carries. For instance, a 97% quality score for data means nothing if it is not serving the purpose it intends to. 
+
+Rather than talking about something abstract like scores and percentages, it is better to talk about objectives. These objectives are the key things that we want to measure when monitoring data health, and they could be use-case dependent. These objectives could define what is “good-enough” data for us. An example of objectives could be as follow (here, I am mapping the objective I want to achieve with the [GreatExpectation](https://greatexpectations.io/expectations/)’s expectation):
+
+| Objective | Identifier | Threshold |
+|-----------|------------|--------------------|
+|`CustomerID` should be unique| `expect_column_values_to_be_unique` |NA|
+|Column `MobileOS` should be one of Android or iOS| `expect_column_values_to_be_in_set` | NA |
+|Column `Age` should have values between 18 and 100|`expect_column_values_to_be_between`| 0.99|
+
+As evident from the table, a quality data for me would be the one where CustomerID is unique and MobileOS just contains two mentioned values. For the Age column, I am expecting the values to be between 18 and 100, but I will accept the 1% values that don’t satisfy this assumption. To elaborate:
+- *Objective* is the quality metric we are tracking
+- *Identifier* is how we measure this metric. Here, we are using `GreatExpectation` as our identifier mechanism.
+- *Threshold* is the wiggle room we are comfortable with giving away.
+
+Jotting down our Objectives/Identifier provide us with significant benefits:
+1. The objectives/identifiers defined above can be easily translated into JSON or YAML and fed into the monitoring logic. Thus, decoupling the execution engine and test we want to perform.
+2. Though the tests can be performed at the same time, different teams can derive the definition of “good-enough” for their use-case by cherry-picking the results of the objectives that are of interest to them. For instance, if someone is only interested in `CustomerID` and `Age`, they can ignore the result of the second objective, as it is of no use to them.
+
