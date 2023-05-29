@@ -15,4 +15,4 @@ Hi! I am Arjun Sehajpal. I ply my trade as a Data Scientist at [ZS](https://www.
 Apart from being a Machine Learning Engineer, I also enjoy:
 - Reading ([here's what I am currently reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading))
 - Philosophy (Epistemology in particular)
-- Yoga and Meditation (to develop [Sattva](https://en.wikipedia.org/wiki/Sattva))
+- Yoga
