@@ -1,6 +1,6 @@
 +++ 
 draft = false
-date = 2023-11-08T00:38:16+05:30
+date = 2024-03-18T00:38:16+05:30
 title = "LLM Evaluation 01: Overview"
 description = ""
 slug = ""
@@ -81,4 +81,16 @@ To evaluate LLMs on toxicity, [Real Toxicity Prompts](https://huggingface.co/dat
 1. Prompt the model k times, and collect the responses.
 2. Use Perspective API to calculate the score for each generation.
 3. Report maximum and average toxicity rate over all examples.
- 
+
+#### 2.2.3. Factuality
+Factuality refers to truthfulness of information provided. As the LLMs are increasingly being used for generating text, we would like to eliminate any disinformation they emanate. Despite their impressive open-ended text generation, LLMs, under the hood, rely on statistical correlation between subword tokens, leading to limitation of generation of factually inaccurate information. 
+
+To illustrate the point, sometime back in 2023, I asked ChatGPT to generate a bio of an Indian-Origin Cricketer who plays for New Zealand. But, it provided incorrect information about his country of origin. </br>
+
+ {{< figure src="/blog-img/06-chatgpt-incorrect-information.png" title="Fig 5: Factually incorrect information" >}}
+
+ The evaluation of factuality depends heavily on having correct "ground-truth" knowledge as a reference. While one can use datasets such as Wiki-Data for evaluation of public information, it becomes increasingly complex and difficult when working on the closed-domain use-cases.
+
+
+ ## Conclusion
+ While LLMs succeed in creating coherent, contextually relevant, and logically consistent narratives or responses without predefined endings or constraints, it is still a challenge to generate outputs that remain factual, reliable and free of toxic content. While there are techniques available to evaluate these metrics, a framework about their use and application is still not available. 
