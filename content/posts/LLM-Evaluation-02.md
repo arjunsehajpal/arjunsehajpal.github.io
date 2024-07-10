@@ -170,3 +170,6 @@ $$
 
 One benefit of NDCG is that it supports graded relevance, allowing documents to have varying levels of relevance rather than just being classified as relevant or not. This means documents can be rated as highly relevant, somewhat relevant, not relevant, etc., providing a more nuanced evaluation than a simple binary distinction.
 
+## Conclusion
+Despite the effectiveness of RAG, challenges in evaluating its performance persist, necessitating scalable and consistent evaluation techniques. Addressing response quality issues like low precision, low recall, and hallucinations is crucial for further improving RAG systems. Employing diverse evaluation paradigms is essential for capturing comprehensive performance insights.
+
