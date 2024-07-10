@@ -25,6 +25,8 @@ In addition to response quality issues, RAG systems can suffer from **hallucinat
 - Irrelevance: The answer is generated from irrelevant information present in the context.
 
 ## Evaluation Strategy
+When evaluating the RAG systems, it is crucial to employ diverse evaluation paradigms to capture the full spectrum of performance. These paradigms can be categorized into isolated evaluations of retrieval and synthesis, and end-to-end evaluations.
+
 The answer generation process in RAG-enabled systems can be broken down to three stages:
 1. Input query
 2. Context retrieval
@@ -36,10 +38,36 @@ To measure the system's overall performance, the evaluation should happen at eac
 
 As illustrated in the above image, the effectiveness of this retrieval (with respect to input query) can be evaluated using metrics such as context relevance, context recall, and context precision. The context relevance measures how pertinent the retrieved information is to the query. The context precision measures proportion of the retrieved chunks that are relevant to answer the query, while context recall measures the proportion of relevant chunks retrieved from the total relevant chunks available in the Vector Store. 
 
-During the answer generation process, the LLM can be evaluated on two fronts. First, the response's faithfulness and groundedness are assessed in relation to the retrieved context. Faithfulness ensures that the generated response accurately reflects the retrieved information, while groundedness checks if the response is firmly based on the provided context. Second, the answer relevance is measured in relation to the input query. This metric ensures that the generated response directly addresses the query, maintaining the overall relevance and coherence of the output.
+During the answer generation process, the LLM can be evaluated on two fronts. 
+- First, the response's **faithfulness** and **groundedness** are assessed in relation to the retrieved context. Faithfulness ensures that the generated response accurately reflects the retrieved information, while groundedness checks if the response is firmly based on the provided context. 
+- Second, the answer's **relevance** is measured in relation to the input query. This metric ensures that the generated response directly addresses the query, maintaining the overall relevance and coherence of the output.
+
 By systematically evaluating these stages using specific metrics, the effectiveness of the RAG system can be comprehensively measured, making sure the responses are reliable and relevant. 
 
-## Metrics
+## Evaluation Data
+Reference-free evaluation is the simplest form of evaluation, but it offers only partial and inconsistent insights. Despite its limitations, this method can be useful for monitoring production data and assessing trends. Metrics such as faithfulness, which do not require actual references, are particularly valuable for evaluating production data.
+
+### Synthetic Dataset: The Pragmatic Approach
+A synthetic dataset presents a better alternative to reference-free evaluation, though it comes with its own set of challenges. The generated data can sometimes be biased and may not accurately represent the underlying data. Despite these issues, synthetic datasets are consistent and easy to generate.
+
+A proper synthetic generation pipeline leverages multiple layers of generation, transformation, filtering, and auditing to create Question-Context-Answer tuples of the expected output. Continuous Eval offers a [Dataset Generator](https://docs.relari.ai/v0.3/dataset/simple_dataset_generator#_top), which can help in creation of such a dataset.
+
+Synthetic dataset provides a good alternative to reference free evaluation, but it not without flaws. Primarily:
+1. Quality issues: LLM models, being inherently probabilistic, may be biased towards certain examples and may not generate examples with sufficient variety.
+2. Synthetic context generation: There is no standard way to generate synthetic RAG data. With Synthetic data, we can only evaluate answer's correctness to the question. There's no way to measure the performance for Retriever.
+
+### Golden Dataset: The Ideal Approach
+The golden dataset is considered the best approach for evaluation, but it requires an enormous amount of time and effort to develop. A golden dataset should have around 100 to 200 examples, that can capture the variety of scenarios that the application aims to handle.
+
+One can undertake following steps to collect a golden dataset.
+1. Identify Representative Questions: Review the user logs and chat histories to compile a list of questions that users typically ask or queries that your system generates. It is better to have a forum or a feedback mechanism where user can raise a ticket or flag a wrong answer.
+2. Gather Ground Truth Contexts: Collecting ground truth contexts is the most challenging aspect of creating a golden dataset and should only be undertaken if absolutely necessary. The process involves determining the key pieces of information needed to provide complete answers for each question. This meticulous approach ensures that the dataset is robust and comprehensive, but it requires significant effort and resources.
+3. Ground Truth Answers: Using the gathered contexts, create detailed and accurate answers for each representative question. It is better to generate multiple answers for each question to cover different ways the information might be presented.
+
+By following the above steps, you can systematically collect high-quality examples to build a comprehensive golden dataset. 
+It is advisable to begin with synthetic data, and gradually, through manual adjustments and the collection of examples, transition into a Golden Dataset.
+
+## Evaluation Metrics
 Data Science runs on metrics. Unless we quantify our findings, we can’t differentiate the good from the bad. In case of retrievals, the quantification metrics can be divided into two broad categories:
 1. Rank-agnostic metrics
 2. Rank-aware metrics
@@ -141,6 +169,4 @@ NDCG = \frac{DCG}{IDGC}
 $$
 
 One benefit of NDCG is that it supports graded relevance, allowing documents to have varying levels of relevance rather than just being classified as relevant or not. This means documents can be rated as highly relevant, somewhat relevant, not relevant, etc., providing a more nuanced evaluation than a simple binary distinction.
-
-## Golden Dataset
 
