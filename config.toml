@@ -3,15 +3,20 @@ title = "Arjun's Blog"
 theme = "hugo-coder"
 languageCode = "en"
 defaultContentLanguage = "en"
-paginate = 20
 canonifyUrls = true
 colorscheme = "dark"
+
+[pagination]
+  pagerSize = 20
 
 [markup]
 	[markup.highlight]
 		codeFences = true
 		style = "bw"
 		guessSyntax = false
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
 
 [params]
     author = "Arjun Sehajpal"

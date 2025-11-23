@@ -2,28 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://arjunsehajpal.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/llm-evaluation-02/</loc>
+    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/llmops/</loc>
+    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/llm-evaluation-overview/</loc>
+    <lastmod>2024-03-18T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/mlops/</loc>
+    <lastmod>2023-05-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/monitoring-the-ml-system/</loc>
+    <lastmod>2023-05-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/conways-law/</loc>
+    <lastmod>2022-12-11T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/product-management/</loc>
+    <lastmod>2022-12-11T00:38:16+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+    <lastmod>2022-06-11T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/data-science-nfrs/</loc>
+    <lastmod>2022-06-04T01:25:27+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/classification/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/model_calibration/</loc>
+    <lastmod>2022-02-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/time-series/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://arjunsehajpal.github.io/posts/</loc>
+    <loc>http://localhost:1313/posts/forecasting-brier-score/</loc>
     <lastmod>2022-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://arjunsehajpal.github.io/tags/</loc>
-    <lastmod>2022-01-12T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://arjunsehajpal.github.io/tags/time-series/</loc>
-    <lastmod>2022-01-12T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/contact/</loc>
   </url><url>
-    <loc>http://arjunsehajpal.github.io/posts/forecasting-brier-score/</loc>
-    <lastmod>2022-01-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://arjunsehajpal.github.io/about/</loc>
-    <lastmod>2021-12-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://arjunsehajpal.github.io/categories/</loc>
-  </url><url>
-    <loc>http://arjunsehajpal.github.io/contact/</loc>
-  </url><url>
-    <loc>http://arjunsehajpal.github.io/projects/</loc>
+    <loc>http://localhost:1313/projects/</loc>
   </url>
 </urlset>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  Model Calibration: Intuition and Implementation · Arjun&#39;s Blog
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Arjun Sehajpal">
+<meta name="description" content="A detailed introduction to Model Calibration">
+<meta name="keywords" content="blog, data science, machine learning, data engineering">
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Model Calibration: Intuition and Implementation">
+  <meta name="twitter:description" content="A detailed introduction to Model Calibration">
+
+<meta property="og:url" content="http://localhost:1313/posts/model_calibration/">
+  <meta property="og:site_name" content="Arjun&#39;s Blog">
+  <meta property="og:title" content="Model Calibration: Intuition and Implementation">
+  <meta property="og:description" content="A detailed introduction to Model Calibration">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-02-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-02-09T00:00:00+00:00">
+    <meta property="article:tag" content="Classification">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/model_calibration/">
+
+
+<link rel="preload" href="http://localhost:1313/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/coder.css" media="screen">
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="http://localhost:1313/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="http://localhost:1313/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/images/apple-touch-icon.png">
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+<link rel="mask-icon" href="http://localhost:1313/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      Arjun&#39;s Blog
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/model_calibration/">
+              Model Calibration: Intuition and Implementation
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-02-09T00:00:00Z">
+                February 9, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              7-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="http://localhost:1313/tags/classification/">Classification</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>Depending upon the nature of the problem and the functioning of the model, the format in which output is provided can differ from model to model. For instance, in a multiclass classification problem, a decision tree provides a label, which is narrowed down going down the tree, where each node reduces the set of possible outcomes to one. On the contrary, the neural networks provide a vector of continuous values calculated by applying non-linear transformations to the input vector. In the latter case, we have to transform the output vector to a single label (here, looking at you, argmax).  Here, there might be a temptation to use these values as the confidence of the model in each label class. After all, isn’t the model that has twice the confidence in the label class for which output is 0.6 to the label class for which the output is 0.3? NO. Not until the model is calibrated.</p>
+<p>Calibration is a post-processing technique used to improve the probability estimate of an already trained model, in order to improve its performance. For instance, among the samples that have a 0.8 probability of belonging to a particular class, we want at least 80% of them to be true.
+A model is perfectly calibrated if, for any p, a prediction of a class with confidence p is correct 100*p times out of 100.</p>
+<p>$$
+P(\widehat{Y} = Y | \widehat{P} = p) = p, \forall p \in [0,1]
+$$
+where,</p>
+<ul>
+<li>$\widehat{Y}$ is the predicted label</li>
+<li>$Y$ is the actual label</li>
+<li>$\widehat{P}$ is the predicted probability estimation</li>
+<li>$p$ is the actual probability</li>
+</ul>
+<p>Though calibration seems like a simple technique, miscalibrated models are actually the norm. Some models are miscalibrated out-of-the-box. For instance, Gaussian Naive Bayes pushes the output response closer to 0 or 1 because it assumes feature independence. On the other hand, results in Random Forest are very rarely approaching (or equal to) 0 or 1, because the output responses in Random Forest are average of the outputs of numerous underlying decision trees. No doubt, one can get predictions equal to 0 or 1 in the case of Random Forest, but that is quite rare from a probabilistic point of view. Neural Networks are even more prone to miscalibration, given the high number of hyperparameters being used. The depth and width, regularization (weight decay), and batch normalization can all contribute to miscalibration. Given so many variables can contribute to miscalibration, it is safe to never assume that the model is calibrated.</p>
+<div class="notice note">
+  <div class="notice-title">
+    <i class="fa-solid fa-sticky-note" aria-hidden="true"></i>Note
+  </div>
+  <div class="notice-content">The Logistic Regression has the potential to be a perfectly calibrated model. This is because log-loss allows such unbiased estimation. In other words, these models are trained by minimizing the negative log-likelihood, trying to asymptotically find a solution by minimizing KL Divergence DKL(X, Y) between the empirical distribution X and distribution Y assumed by the model. This, in a way, implies optimizing for calibration.</div>
+</div>
+
+<h2 id="is-my-model-miscalibrated">
+  Is my model miscalibrated?
+  <a class="heading-link" href="#is-my-model-miscalibrated">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Now that we know calibration is a thing, how do we know whether our model requires calibration or not? For that, we can use calibration plots. They are the most common ways to check whether the model is miscalibrated or not. Calibration plots are often line plots, where on the y-axis, the proportion of true probabilities, and on the x-axis, the predicted probability is plotted. But these probabilities are not plotted as such. They need to be first binned by the probability estimation that the model made. For instance, we can take all the predictions in the range of 0 to 0.2 and put them in the same bin and predictions between 0.21 and 0.4 in the other, and so on. Then, for each bin, the percentage of positive samples is calculated.</p>
+<h3 id="example">
+  Example
+  <a class="heading-link" href="#example">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>For the sake of this example, I will be using Breast Cancer Dataset. This data is readily available in Scikit Learn Dataset API and can be imported as follow:-</p>
+<pre tabindex="0"><code>import pandas as pd
+from sklearn.datasets import load_breast_cancer
+
+bcd = load_breast_cancer()
+df = pd.DataFrame(
+    data=bcd.data,
+    columns=bcd.feature_names
+)
+df[&#34;target&#34;] = bcd.target
+</code></pre><p>The label is a binary variable, 0 and 1, where 0 stood for benign and 1 for malignant tumor. The aim here is to train a simple Random Forest Classifier and plot the corresponding calibration curve. For simplification, I am doing a random train-test split and “fitting” an RF Classifier. As we require probabilistic predictions for plotting the calibration curves, we are calling the <code>predict_proba</code> method on the trained model object.</p>
+<pre tabindex="0"><code>from sklearn.ensemble import RandomForestClassifier
+ 
+feature_df = df.drop(columns=[&#34;target&#34;])
+target_df = df[&#34;target&#34;]
+ 
+x_train, x_test, y_train, y_test = train_test_split(
+    feature_df,
+    target_df,
+    test_size=0.2,
+    random_state=19
+)
+ 
+RF = RandomForestClassifier(random_state=19)
+rf_classifier = RF.fit(x_train, y_train)
+rf_preds = rf_classifier.predict_proba(x_test)
+</code></pre><p>Once the class probabilities are captured, the next step would be to compute the bins for the calibration plot. One can use Scikit-learn’s <code>calibration_curve</code> method to compute the true and predicted probabilities for a calibration curve. This method, discretize the probability range of [0, 1] into a number of bins, mentioned in parameter <code>n_bins</code>, passed in the method above. Here, we are creating 10 bins:-</p>
+<pre tabindex="0"><code>cal_y, cal_x = calibration_curve(y_test, rf_preds[:, 1], n_bins=10)
+</code></pre><p>After this, we can plot a simple line plot using Seaborn.</p>
+<pre tabindex="0"><code>import matplotlib.pyplot as plt
+import seaborn as sns
+plt.style.use(&#34;fivethirtyeight&#34;)
+ 
+sns.lineplot(x = cal_x, y = cal_y, markers=&#34;*&#34;, label=&#34;Random Forest&#34;)
+plt.xlabel(&#34;FORECAST&#34;, fontsize = 10)
+plt.ylabel(&#34;PERCENTAGE CORRECT&#34;, fontsize = 10)
+plt.title(&#34;Calibration Plot for Breast Cancer Data&#34;, fontsize = 14)
+plt.legend()
+plt.show()
+</code></pre><p>Calibration plot:-</p>
+<figure><img src="http://localhost:1313/blog-img/Calibration-plot-for-breast-cancer-data.png"><figcaption>
+      <h4>Fig 02 - Miscalibration</h4>
+    </figcaption>
+</figure>
+
+<p>The calibration of the model is way-off, but we can see horizontal lines from 0 to 0.25 and from 0.85 to 1. This means that model is pushing predictions closer to 0 and 1 in their respective neighbourhood. This implies that the model is discriminative. We can also look explore how many predictions, the model has made, in each bin.</p>
+<pre tabindex="0"><code>def bin_total(y_true, y_prob, n_bins):
+    bins = np.linspace(0, 1, n_bins + 1)
+    binids = np.digitize(y_prob, bins) - 1
+    return np.bincount(binids, minlength=len(bins))
+</code></pre><pre tabindex="0"><code>bin_total(y_test, rf_preds[:,1], n_bins=10)
+&gt;&gt; array([32,  2,  1,  3,  2,  6,  0,  2,  1, 29, 36], dtype=int64)
+</code></pre><p>As we can see from the above result, most of the predictions are either near 0 or 1. Very few are in the maybe category. So, the above model is a good discriminator, but poorly calibrated.</p>
+<div class="notice note">
+  <div class="notice-title">
+    <i class="fa-solid fa-sticky-note" aria-hidden="true"></i>Note
+  </div>
+  <div class="notice-content">The trade-off between discrimination and calibration can depend on the final aim of the model. If the goal is to build a model that takes automatic decisions, discrimination can be preferred, and if the goal is to provide statistical estimates, calibration should be preferred.</div>
+</div>
+
+<h5 id="why-is-binning-required">
+  Why is binning required?
+  <a class="heading-link" href="#why-is-binning-required">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h5>
+<p>As in the equation above, the probability can&rsquo;t be computed using a finite number of samples, since $\widehat{P}$ is a continuous random variable. Therefore, to empirically measure the model&rsquo;s calibration, several statistics techniques are designed and binning is one such technique. By binning samples, we can calculate expected sample accuracy as a function of confidence, while reducing the effects of minor observation errors. It is required for bins to have equal width to ensure plot readability.</p>
+<h3 id="point-estimates-of-calibration">
+  Point Estimates of Calibration
+  <a class="heading-link" href="#point-estimates-of-calibration">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>While Calibration Plots are a reliable visual tools, it is equally important to have a scaler summary statistics for calibration. We discuss two of such methods.</p>
+<h4 id="1-expected-calibration-error">
+  1. Expected Calibration Error
+  <a class="heading-link" href="#1-expected-calibration-error">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Expected Calibration Error (ECE) measures the difference in expected accuracy and expected confidence. Mathematically,
+$$
+\mathbb{E}_{\widehat{P}}[|\mathbb{P}(\widehat{Y} = Y | \widehat{P} = p) - p|]
+$$</p>
+<p>In practise, ECE can be calculated by partitioning the predictions into M equally-spaced bins (as we did in Calibration Plots) and taking a weighted average of bins’ accuracy and confidence difference. This can be denoted as:-
+$$
+ECE = \sum_{m=1}^{M} \frac{|B_m|}{n} |acc(B_m) - conf(B_m)|
+$$</p>
+<p>Here, $n$ is total number of bins. For perfect calibration, ECE should be $0$. Hence, $acc(B_m)$ should be equal to $conf(B_m)$.</p>
+<h4 id="2-maximum-calibration-error">
+  2. Maximum Calibration Error
+  <a class="heading-link" href="#2-maximum-calibration-error">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Maximum Calibration Error (MCE) is preferred in the high-risk application where reliable confidence measures are absolutely necessary. Empirically, MCE can be defined as follow:-
+$$
+MCE = max_{m \in [1 &hellip; M]} |acc(B_m) - conf(B_m)|
+$$</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="heading-link" href="#conclusion">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>In this post, we tried to establish what is the intuition behind the Calibration, why it is important and how can we measure it. In the continuation of this post, we will ponder over the techniques that can effectively remedy the miscalibration.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2025
+     Arjun Sehajpal 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="http://localhost:1313/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

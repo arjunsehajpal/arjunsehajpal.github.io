@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Product-Management on Arjun&#39;s Blog</title>
+    <link>http://localhost:1313/tags/product-management/</link>
+    <description>Recent content in Product-Management on Arjun&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 11 Dec 2022 00:38:16 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/product-management/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>On Conway’s Law</title>
+      <link>http://localhost:1313/posts/conways-law/</link>
+      <pubDate>Sun, 11 Dec 2022 00:38:16 +0530</pubDate>
+      <guid>http://localhost:1313/posts/conways-law/</guid>
+      <description>&lt;p&gt;Software design is an iterative process. Its longevity depends upon thousands of small design decisions taken every day, and each decision should be in sync with the other. This constant attention to detail is what makes a software system tick. Hence, the quality of software depends hugely on the efficiency of communication between humans building it. This observation became the basis of Conway’s Law.&lt;/p&gt;&#xA;&lt;p&gt;Paraphrasing Dr. Melvin E. Conway, “Any organization that designs a system, will produce a design whose structure is a copy of the organization’s communication structure.” Though Dr. Conway used the term “system” in context to System Theory, where everything is a system and everything is a part of a system. And it is certainly true for software systems. Conway’s law is an observational law, which tries to build a connection between innovation and the impact and working methodologies and structure of the organization. A classic example of this law would be Apple’s iOS and Android, with the former being a closed in-house project and the latter being developed by open-source contributors all over the globe. This difference is quite obvious as iOS despite being very efficient, doesn’t gel well with others. On the other hand, Android is more flexible but isn’t as well organized as its counterpart.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>NFRs for Data Science Products</title>
+      <link>http://localhost:1313/posts/data-science-nfrs/</link>
+      <pubDate>Sat, 04 Jun 2022 01:25:27 +0530</pubDate>
+      <guid>http://localhost:1313/posts/data-science-nfrs/</guid>
+      <description>&lt;p&gt;Non-functional requirements (NFRs) are as important as functional requirements. While the system can still work if the NFRs are not met, it may not meet the stakeholders’ expectations. A functional requirement (FR) defines the specific behaviour of a system, whereas an NFR is a criterion to judge the operation of the system. For instance, a system should show a “list of orders” by the user is defined as a functional requirement, and how much time it takes for a page to load and show the first 10 orders is defined as a non-functional requirement. Hence, NFRs refer to the general qualities that provide a good user experience.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

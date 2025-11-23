@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  LLM Evaluation 02: RAG · Arjun&#39;s Blog
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Arjun Sehajpal">
+<meta name="description" content="Once perceived as a hack, Retrieval-Augmented Generation (RAG) has now become an essential component of LLM applications. It has been most impactful in the area of closed-domain question answering, which was considered tricky due to static knowledge bases and limited context understanding. Since RAG systems retrieve information in real-time from a continuously updated corpus (thanks to vector databases), there is no need for manual updates to a static knowledge base. By combining retrieval and generation, RAG-enabled LLM systems can better understand the context and nuances of complex queries, leading to more accurate and relevant answers. The effectiveness of RAG-enabled LLM systems has been so significant that entire ecosystems of startups and vector database providers have emerged around them.">
+<meta name="keywords" content="blog, data science, machine learning, data engineering">
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="LLM Evaluation 02: RAG">
+  <meta name="twitter:description" content="Once perceived as a hack, Retrieval-Augmented Generation (RAG) has now become an essential component of LLM applications. It has been most impactful in the area of closed-domain question answering, which was considered tricky due to static knowledge bases and limited context understanding. Since RAG systems retrieve information in real-time from a continuously updated corpus (thanks to vector databases), there is no need for manual updates to a static knowledge base. By combining retrieval and generation, RAG-enabled LLM systems can better understand the context and nuances of complex queries, leading to more accurate and relevant answers. The effectiveness of RAG-enabled LLM systems has been so significant that entire ecosystems of startups and vector database providers have emerged around them.">
+
+<meta property="og:url" content="http://localhost:1313/posts/llm-evaluation-02/">
+  <meta property="og:site_name" content="Arjun&#39;s Blog">
+  <meta property="og:title" content="LLM Evaluation 02: RAG">
+  <meta property="og:description" content="Once perceived as a hack, Retrieval-Augmented Generation (RAG) has now become an essential component of LLM applications. It has been most impactful in the area of closed-domain question answering, which was considered tricky due to static knowledge bases and limited context understanding. Since RAG systems retrieve information in real-time from a continuously updated corpus (thanks to vector databases), there is no need for manual updates to a static knowledge base. By combining retrieval and generation, RAG-enabled LLM systems can better understand the context and nuances of complex queries, leading to more accurate and relevant answers. The effectiveness of RAG-enabled LLM systems has been so significant that entire ecosystems of startups and vector database providers have emerged around them.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-08T00:38:16+05:30">
+    <meta property="article:modified_time" content="2024-07-08T00:38:16+05:30">
+    <meta property="article:tag" content="LLMOps">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/llm-evaluation-02/">
+
+
+<link rel="preload" href="http://localhost:1313/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/coder.css" media="screen">
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="http://localhost:1313/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="http://localhost:1313/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/images/apple-touch-icon.png">
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+<link rel="mask-icon" href="http://localhost:1313/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      Arjun&#39;s Blog
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/llm-evaluation-02/">
+              LLM Evaluation 02: RAG
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-07-08T00:38:16&#43;05:30">
+                July 8, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              11-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="http://localhost:1313/tags/llmops/">LLMOps</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>Once perceived as a hack, Retrieval-Augmented Generation (RAG) has now become an essential component of LLM applications. It has been most impactful in the area of closed-domain question answering, which was considered tricky due to static knowledge bases and limited context understanding. Since RAG systems retrieve information in real-time from a continuously updated corpus (thanks to vector databases), there is no need for manual updates to a static knowledge base. By combining retrieval and generation, RAG-enabled LLM systems can better understand the context and nuances of complex queries, leading to more accurate and relevant answers. The effectiveness of RAG-enabled LLM systems has been so significant that entire ecosystems of startups and vector database providers have emerged around them.</p>
+<p>Though RAG provides broader scope and flexibility, the challenges still remain on how to evaluate and quantify the performance of the RAG pipeline. As discussed in the previous post, eyeballing still is the primary strategy of evaluation. Though necessary, eyeballing is neither scalable nor consistent (for a human tester would like one answer one day and another on another day). As applications in production require continuous improvement, the evaluation technique should be scalable as well as consistent.</p>
+<h2 id="issues-that-plague-rag-applications">
+  Issues that plague RAG Applications
+  <a class="heading-link" href="#issues-that-plague-rag-applications">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>The challenges faced by RAG applications can be divided into two broad categories, response quality issues and wrong response generation (hallucinations).</p>
+<p><strong>Response quality</strong> issues arise in systems suffering from either <strong>low precision</strong> or <strong>low recall</strong>. Low precision occurs when only a few of the retrieved chunks are relevant to the query. Low recall, often accompanying low precision, happens when not all relevant chunks are retrieved, leading to incomplete or incorrect answers. When a RAG system experiences these issues, the LLM does not receive the correct chunks needed to generate a coherent and accurate answer. To summarise:</p>
+<ul>
+<li>Low precision: Not all retrieved chunks are relevant</li>
+<li>Low recall: Not all relevant chunks are retrieved</li>
+</ul>
+<p>In addition to response quality issues, RAG systems can suffer from <strong>hallucinations</strong>, where the model generates information that is not present in the retrieved context. However, not all bad responses are due to hallucinations. Sometimes, crucial chunks needed to generate the correct answer get buried among other chunks. As a result, the LLM generates an answer based on the retrieved information, but it may be irrelevant to the question. This issue is known as the &ldquo;<em>lost in the middle</em>&rdquo; phenomenon. Thus, bad response generation can be categorised into two broad types:</p>
+<ul>
+<li>Hallucination: The answer is generated from information that is not present in the context.</li>
+<li>Irrelevance: The answer is generated from irrelevant information present in the context.</li>
+</ul>
+<h2 id="evaluation-strategy">
+  Evaluation Strategy
+  <a class="heading-link" href="#evaluation-strategy">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>When evaluating the RAG systems, it is crucial to employ diverse evaluation paradigms to capture the full spectrum of performance. These paradigms can be categorized into isolated evaluations of retrieval and synthesis, and end-to-end evaluations.</p>
+<p>The answer generation process in RAG-enabled systems can be broken down to three stages:</p>
+<ol>
+<li>Input query</li>
+<li>Context retrieval</li>
+<li>Response generation</li>
+</ol>
+<p>To measure the system&rsquo;s overall performance, the evaluation should happen at each of these stages.</p>
+<figure><img src="http://localhost:1313/blog-img/07-Stage-Evaluation.jpg"><figcaption>
+      <h4>Fig 1: Stage-level evaluation</h4>
+    </figcaption>
+</figure>
+
+<p>As illustrated in the above image, the effectiveness of this retrieval (with respect to input query) can be evaluated using metrics such as context relevance, context recall, and context precision. The context relevance measures how pertinent the retrieved information is to the query. The context precision measures proportion of the retrieved chunks that are relevant to answer the query, while context recall measures the proportion of relevant chunks retrieved from the total relevant chunks available in the Vector Store.</p>
+<p>During the answer generation process, the LLM can be evaluated on two fronts.</p>
+<ul>
+<li>First, the response&rsquo;s <strong>faithfulness</strong> and <strong>groundedness</strong> are assessed in relation to the retrieved context. Faithfulness ensures that the generated response accurately reflects the retrieved information, while groundedness checks if the response is firmly based on the provided context.</li>
+<li>Second, the answer&rsquo;s <strong>relevance</strong> is measured in relation to the input query. This metric ensures that the generated response directly addresses the query, maintaining the overall relevance and coherence of the output.</li>
+</ul>
+<p>By systematically evaluating these stages using specific metrics, the effectiveness of the RAG system can be comprehensively measured, making sure the responses are reliable and relevant.</p>
+<h2 id="evaluation-data">
+  Evaluation Data
+  <a class="heading-link" href="#evaluation-data">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Reference-free evaluation is the simplest form of evaluation, but it offers only partial and inconsistent insights. Despite its limitations, this method can be useful for monitoring production data and assessing trends. Metrics such as faithfulness, which do not require actual references, are particularly valuable for evaluating production data.</p>
+<h3 id="synthetic-dataset-the-pragmatic-approach">
+  Synthetic Dataset: The Pragmatic Approach
+  <a class="heading-link" href="#synthetic-dataset-the-pragmatic-approach">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>A synthetic dataset presents a better alternative to reference-free evaluation, though it comes with its own set of challenges. The generated data can sometimes be biased and may not accurately represent the underlying data. Despite these issues, synthetic datasets are consistent and easy to generate.</p>
+<p>A proper synthetic generation pipeline leverages multiple layers of generation, transformation, filtering, and auditing to create Question-Context-Answer tuples of the expected output. Continuous Eval offers a <a href="https://docs.relari.ai/v0.3/dataset/simple_dataset_generator#_top"  class="external-link" target="_blank" rel="noopener">Dataset Generator</a>, which can help in creation of such a dataset.</p>
+<p>Synthetic dataset provides a good alternative to reference free evaluation, but it not without flaws. Primarily:</p>
+<ol>
+<li>Quality issues: LLM models, being inherently probabilistic, may be biased towards certain examples and may not generate examples with sufficient variety.</li>
+<li>Synthetic context generation: There is no standard way to generate synthetic RAG data. With Synthetic data, we can only evaluate answer&rsquo;s correctness to the question. There&rsquo;s no way to measure the performance for Retriever.</li>
+</ol>
+<h3 id="golden-dataset-the-ideal-approach">
+  Golden Dataset: The Ideal Approach
+  <a class="heading-link" href="#golden-dataset-the-ideal-approach">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>The golden dataset is considered the best approach for evaluation, but it requires an enormous amount of time and effort to develop. A golden dataset should have around 100 to 200 examples, that can capture the variety of scenarios that the application aims to handle.</p>
+<p>One can undertake following steps to collect a golden dataset.</p>
+<ol>
+<li>Identify Representative Questions: Review the user logs and chat histories to compile a list of questions that users typically ask or queries that your system generates. It is better to have a forum or a feedback mechanism where user can raise a ticket or flag a wrong answer.</li>
+<li>Gather Ground Truth Contexts: Collecting ground truth contexts is the most challenging aspect of creating a golden dataset and should only be undertaken if absolutely necessary. The process involves determining the key pieces of information needed to provide complete answers for each question. This meticulous approach ensures that the dataset is robust and comprehensive, but it requires significant effort and resources.</li>
+<li>Ground Truth Answers: Using the gathered contexts, create detailed and accurate answers for each representative question. It is better to generate multiple answers for each question to cover different ways the information might be presented.</li>
+</ol>
+<p>By following the above steps, you can systematically collect high-quality examples to build a comprehensive golden dataset.
+It is advisable to begin with synthetic data, and gradually, through manual adjustments and the collection of examples, transition into a Golden Dataset.</p>
+<h2 id="evaluation-metrics">
+  Evaluation Metrics
+  <a class="heading-link" href="#evaluation-metrics">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Data Science runs on metrics. Unless we quantify our findings, we can’t differentiate the good from the bad. In case of retrievals, the quantification metrics can be divided into two broad categories:</p>
+<ol>
+<li>Rank-agnostic metrics</li>
+<li>Rank-aware metrics</li>
+</ol>
+<h3 id="rank-agnostic-metrics">
+  Rank-agnostic metrics
+  <a class="heading-link" href="#rank-agnostic-metrics">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>The rank-agnostic metrics evaluate the relevance of all retrieved chunks without considering their order. There are three well-known rank-agnostic metrics:</p>
+<ol>
+<li>Precision measures the proportion of retrieved context that is relevant, effectively evaluating the signal versus noise in the retrieval process.</li>
+<li>Recall assesses the completeness of the retrieval, determining what proportion of all relevant contexts are retrieved.</li>
+<li>F1-score is the harmonic mean of precision and recall, providing a single metric that balances both precision and recall.</li>
+</ol>
+<p>Consider a document D1 divided into two chunks, C1 and C2, which are added to a Vector-DB. If a question is posed to summarise D1, and the retriever retrieves three chunks including C1 but misses C2, the precision would be 0.33, as one out of three retrieved chunks is relevant. The recall would be 0.5, since one of the two relevant chunks necessary to answer the question was retrieved.</p>
+<div class="notice info">
+  <div class="notice-title">
+    <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>Info
+  </div>
+  <div class="notice-content">Recall often holds greater significance in retrieval systems intended for generation, as it ensures that the context is sufficiently complete to answer the query effectively.</div>
+</div>
+
+<h3 id="rank-aware-metrics">
+  Rank-aware metrics
+  <a class="heading-link" href="#rank-aware-metrics">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Ranking-agnostic metrics are simple but they only go so far. While precision and recall might come out to be satisfactory, LLM also reacts differently to how information is presented to them. High-ranking relevant chunks can significantly improve the quality and accuracy of the generated answers. Rank-aware metrics are essential for optimising the relevance and quality of information retrieved, which directly impacts the effectiveness of answer generation.</p>
+<h4 id="mean-reciprocal-rank-mrr">
+  Mean reciprocal rank (MRR)
+  <a class="heading-link" href="#mean-reciprocal-rank-mrr">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>MRR evaluates the effectiveness of a retrieval system by measuring how well it ranks the relevant chunks. It is defined as the average of the reciprocal ranks of the first relevant chunk retrieved for a set of queries.</p>
+<p>$$
+\text{MRR} = \frac{1}{|Q|} \sum_{i=1}^{|Q|} \frac{1}{\text{rank}_i}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$|Q|$ is the total number of queries.</li>
+<li>$\text{rank}_i$ is the rank position of the first relevant chunk for the $i$-th query.</li>
+</ul>
+<p>Consider a scenario where an LLM-based system retrieves chunks in response to user queries. For three queries, the ranks of the first relevant chunks are 1, 3, and 2. The reciprocal ranks would be $1$, $\frac{1}{3}$ and $\frac{1}{2}$ respectively. Hence, the MRR would be:
+$$
+MRR = \frac{1}{3}(1 + \frac{1}{3} + \frac{1}{2}) \approx 0.61
+$$</p>
+<p>MRR nudges models towards generating better responses by ensuring that they have access to the most important and pertinent information. This access to highly relevant data allows LLMs to produce more accurate and contextually appropriate answers to user queries.</p>
+<h4 id="mean-average-precision-map">
+  Mean Average Precision (MAP)
+  <a class="heading-link" href="#mean-average-precision-map">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>MAP provides a single-figure measure of quality across multiple queries, taking into account the precision of the retrieval system at various recall levels. It is the mean of the average precision scores for a set of queries. So, before going into MAP, we need to understand what average precision is.</p>
+<p><strong>Average Precision</strong> calculates the precision of the retrieval system at each position in the ranked list where a relevant chunk is found. It then averages these precision values.</p>
+<p>$$
+AP = \frac{\sum_{k=1}^{n} \left( P(k) \times \text{rel}(k) \right)}{\text{number of relevant chunks}}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$P(k)$ is the precision at rank $k$</li>
+<li>$\text{rel}(k)$ is a binary indicator function that equals $1$ if the chunk at rank $k$ is relevant, and $0$ otherwise.</li>
+</ul>
+<p>So, as per the name suggests, MAP is the <strong>mean</strong> of the average precision scores for a set of queries. It provides a single metric to evaluate the performance of the retrieval system across multiple queries. Mathematically, MAP can be defines as:</p>
+<p>$$
+MAP = \frac{1}{Q} \sum_{q=1}^{Q} AP(q)
+$$</p>
+<p>where:</p>
+<ul>
+<li>$Q$ is total number of queries</li>
+<li>$AP(q)$ is the average precision for the query $q$</li>
+</ul>
+<p>A higher MAP score indicates better overall performance of the retrieval system, as it reflects both precision and the effectiveness of ranking relevant chunks higher.</p>
+<div class="notice info">
+  <div class="notice-title">
+    <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>Info
+  </div>
+  <div class="notice-content">In terms of retrieval, MAP is better than MRR as we want to find all relevant chunks. MAP evaluates the entire ranked list of retrieved chunks, considering precision at every rank where a relevant chunk appears. MRR, on the other hand, is more suitable for web search use-cases, as it measures how quickly the first relevant chunk is retrieved. But in our case, we would like to retrieve all the information, in correct order.</div>
+</div>
+
+<h4 id="normalised-discounted-cumulative-gain-ndcg">
+  Normalised Discounted Cumulative Gain (NDCG)
+  <a class="heading-link" href="#normalised-discounted-cumulative-gain-ndcg">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>NDCG measures the usefulness, or gain, of chunks based on their positions in the result list, accounting for the relevance of each chunk.It is particularly valuable because it considers the order of results and provides a normalized score that allows for comparison across different queries and systems. To understand NDCG, we need to start from cumulative gain.</p>
+<p><strong>Cumulative Gain (CG)</strong> is the sum of the relevance scores of all retrieved chunks for a query. Mathematically,
+$$
+CG = \sum_{i=1}^{n} rel_i
+$$</p>
+<p>where:</p>
+<ul>
+<li>$rel_i$ is the relevance score of the chunk at position $i$. A relevance score could be a binary indicator, such as:
+<ul>
+<li>0: not relevant</li>
+<li>1: relevant</li>
+</ul>
+</li>
+</ul>
+<p><strong>Discounted Cumulative Gain (DCG)</strong> improves on CG by adding a logarithmic reduction factor, which discounts the relevance of chunks as their rank positions increase. Hence, higher ranked chunk contributes more to DCG. Mathematically,</p>
+<p>$$
+DCG = \sum_{i=1}^{n} \frac{rel_i}{\log_2(i + 1)}
+$$</p>
+<p><strong>Ideal Discounted Cumulative Gain (IDCG)</strong> is the DCG score for the ideal ordering of chunks, where all relevant chunks are ranked at the top. It represents maximum possible DCG. Mathematically:</p>
+<p>$$
+IDCG = \sum_{i=1}^{|REL|} \frac{rel_i}{\log_2(i + 1)}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$|REL|$ is the total number of relevant documents</li>
+</ul>
+<p><strong>Normalized Discounted Cumulative Gain (NDCG)</strong> is the ratio of DCG to IDCG, providing a score between 0 and 1. This normalization allows for comparison across different queries.</p>
+<p>$$
+NDCG = \frac{DCG}{IDGC}
+$$</p>
+<p>One benefit of NDCG is that it supports graded relevance, allowing documents to have varying levels of relevance rather than just being classified as relevant or not. This means documents can be rated as highly relevant, somewhat relevant, not relevant, etc., providing a more nuanced evaluation than a simple binary distinction.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="heading-link" href="#conclusion">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Despite the effectiveness of RAG, challenges in evaluating its performance persist, necessitating scalable and consistent evaluation techniques. Addressing response quality issues like low precision, low recall, and hallucinations is crucial for further improving RAG systems. Employing diverse evaluation paradigms is essential for capturing comprehensive performance insights.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2025
+     Arjun Sehajpal 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="http://localhost:1313/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

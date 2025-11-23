@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  LLM Evaluation 01: Overview · Arjun&#39;s Blog
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Arjun Sehajpal">
+<meta name="description" content="LLMs have been all the rage now. Whether you believe in the potential of LLMs or you are still in the camp of sceptics, it doesn’t matter. It’s the stakeholders’ opinion about LLMs that matters. This is because LLMs make it quite easy to “wow the users” and attract them to the product. So, they facilitate onboarding new users to the product. However, it is the trust that retains the users. And, as most of us know by now, LLMs make numerous mistakes. As the complexity rises and users receive incorrect answers frequently, they won’t trust the system and will revert to the tools they were using before.">
+<meta name="keywords" content="blog, data science, machine learning, data engineering">
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="LLM Evaluation 01: Overview">
+  <meta name="twitter:description" content="LLMs have been all the rage now. Whether you believe in the potential of LLMs or you are still in the camp of sceptics, it doesn’t matter. It’s the stakeholders’ opinion about LLMs that matters. This is because LLMs make it quite easy to “wow the users” and attract them to the product. So, they facilitate onboarding new users to the product. However, it is the trust that retains the users. And, as most of us know by now, LLMs make numerous mistakes. As the complexity rises and users receive incorrect answers frequently, they won’t trust the system and will revert to the tools they were using before.">
+
+<meta property="og:url" content="http://localhost:1313/posts/llm-evaluation-overview/">
+  <meta property="og:site_name" content="Arjun&#39;s Blog">
+  <meta property="og:title" content="LLM Evaluation 01: Overview">
+  <meta property="og:description" content="LLMs have been all the rage now. Whether you believe in the potential of LLMs or you are still in the camp of sceptics, it doesn’t matter. It’s the stakeholders’ opinion about LLMs that matters. This is because LLMs make it quite easy to “wow the users” and attract them to the product. So, they facilitate onboarding new users to the product. However, it is the trust that retains the users. And, as most of us know by now, LLMs make numerous mistakes. As the complexity rises and users receive incorrect answers frequently, they won’t trust the system and will revert to the tools they were using before.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-18T00:38:16+05:30">
+    <meta property="article:modified_time" content="2024-03-18T00:38:16+05:30">
+    <meta property="article:tag" content="LLMOps">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/llm-evaluation-overview/">
+
+
+<link rel="preload" href="http://localhost:1313/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/coder.css" media="screen">
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="http://localhost:1313/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="http://localhost:1313/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/images/apple-touch-icon.png">
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+<link rel="mask-icon" href="http://localhost:1313/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+<body class="preload-transitions colorscheme-light">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      Arjun&#39;s Blog
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/llm-evaluation-overview/">
+              LLM Evaluation 01: Overview
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-03-18T00:38:16&#43;05:30">
+                March 18, 2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              7-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="http://localhost:1313/tags/llmops/">LLMOps</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>LLMs have been all the rage now. Whether you believe in the potential of LLMs or you are still in the camp of sceptics, it doesn’t matter. It’s the stakeholders’ opinion about LLMs that matters. This is because LLMs make it quite easy to “wow the users” and attract them to the product. So, they facilitate onboarding new users to the product. However, it is the trust that retains the users. And, as most of us know by now, LLMs make numerous mistakes. As the complexity rises and users receive incorrect answers frequently, they won’t trust the system and will revert to the tools they were using before.</p>
+<p>This post is my attempt to consolidate the research around LLM evaluation and come up with a loose framework that enhances the trustworthiness of LLM-powered applications.</p>
+<h2 id="1-why-traditional-evaluation-framework-wont-work">
+  1. Why traditional evaluation framework won’t work?
+  <a class="heading-link" href="#1-why-traditional-evaluation-framework-wont-work">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>When we developed Machine Learning models in the pre-LLM era (BC can now be Before ChatGPT), we had a precise checklist which formed our evaluation framework. We divided our input dataset into training, evaluation and test sets and measured the performance by calculating metrics on these datasets.</p>
+<figure><img src="http://localhost:1313/blog-img/06-traditional-evaluation-framework.jpg"><figcaption>
+      <h4>Fig 1: Traditional Evaluation Framework</h4>
+    </figcaption>
+</figure>
+
+<p>But this same approach doesn’t work for LLMs. This is because the traditional approach is based on two key pillars, i.e.,  data and metrics. As LLMs are expensive to train, most applications resort to calling an external API, provided by the OpenAIs and Anthropics of this world. And, good luck with getting the data for these models. But even if one has trained their own LLM (hence, they have data), the question that looks us in the eyes is “what metrics to calculate for evaluation?”. The output of LLMs are more on the qualitative side and are hard to quantify. Another challenge is General-Purpose nature of LLMs. They can perform a diverse set of behaviours. Thus, aggregate metrics become more or less inefficient.</p>
+<p>To summarise, there are three challenges in evaluating the LLMs:</p>
+<ul>
+<li>Access to training data</li>
+<li>Qualitative outputs, which are hard to quantify</li>
+<li>Diversity of behaviour</li>
+</ul>
+<h2 id="2-makeshift-evaluation-framework-for-llms">
+  2. Makeshift evaluation framework for LLMs
+  <a class="heading-link" href="#2-makeshift-evaluation-framework-for-llms">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>As discussed in the previous section, traditional evaluation strategy needed a dataset and a bunch of metrics to calculate on that dataset. So, building on this, we will divide our approach into two steps:</p>
+<ul>
+<li>What dataset to use?</li>
+<li>What metrics to measure?</li>
+</ul>
+<h3 id="21-evaluation-dataset">
+  2.1. Evaluation dataset
+  <a class="heading-link" href="#21-evaluation-dataset">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>A dataset is any set of records. As opposed to the supervised paradigm of model training, we don’t have input-output pairs to begin with. So, we will have to compile our own data. To do so, we can follow the following three-step strategy.</p>
+<h4 id="211-look-out-for-interesting-cases">
+  2.1.1. Look out for interesting cases
+  <a class="heading-link" href="#211-look-out-for-interesting-cases">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>The best way to prepare the dataset is to just <strong>start</strong>. Accumulate the ad hoc prompts that you use. For instance, write a short paragraph about <code>subject</code>. Here, the subject could be anything, from an inanimate object to a pet.</br>
+As you are firing these prompts, there will be some unique and interesting cases where the LLM will fail to generate the “required” output and will require some tweaks in the prompt. You can consolidate these <em>tricky</em>, <em>hard</em> and <em>unique</em> examples into a small dataset.</p>
+<h4 id="212-incrementally-add-more-data">
+  2.1.2. Incrementally add more data
+  <a class="heading-link" href="#212-incrementally-add-more-data">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>As the LLM application is rolled out, we can start capturing the real time feedback from the users. This feedback could be handled in two ways:</p>
+<ul>
+<li><em>Explicit feedback</em>: this sort of feedback is easier to capture. Here, we just ask the user whether he liked the answer generated or not. As OpenAI does, we can provide a thumbs-up and thumbs-down icon to collect this type of feedback.</li>
+<li><em>Implicit feedback</em>: as opposed to explicit feedback, this feedback is relatively difficult to collect. One way to collect implicit feedback is to check if the user is asking the same question (different words but semantically having the similar meaning)  multiple times.</li>
+</ul>
+<figure><img src="http://localhost:1313/blog-img/06-chatgpt-explicit-feedback.png"><figcaption>
+      <h4>Fig 2: Explicit Feedback in ChatGPT</h4>
+    </figcaption>
+</figure>
+
+<p>Using explicit and implicit feedback, we can collect cases which users disliked the output for and add them to data created in the previous step. Also, we can look out for underrepresented topics, intents and documents (in other words, edge cases).</p>
+<h3 id="22-evaluation-metrics">
+  2.2. Evaluation metrics
+  <a class="heading-link" href="#22-evaluation-metrics">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Evaluation metrics estimates how well the model predictions reflect the “Gold” outputs. The gold output here refers to the manually-curated outputs. As the outputs of LLMs are text or images, comparing the prediction with these labels isn’t as straightforward. As discussed earlier, the output of the LLMs is text or images, which are judged on the qualitative properties. Because of which, entirely getting rid of human-evaluation would be difficult. But, our aim should be to reduce the involvement as much as possible.</p>
+<figure><img src="http://localhost:1313/blog-img/06-llm-evaluation-overview.png"><figcaption>
+      <h4>Fig 3: Types of LLM evaluation</h4>
+    </figcaption>
+</figure>
+
+<p>As illustrated in the diagram above, an LLM can be evaluated either intrinsically or extrinsically. In brief,</p>
+<ul>
+<li><em>Intrinsic evaluation</em>: looks into the internals of the LLM. For instance, understanding how it embeds words of different types, or how it implies biases etc.</li>
+<li><em>Extrinsic evaluation</em>: evaluates the LLM by providing input to the model in a systematic way and analyses the output generated by these inputs.</li>
+</ul>
+<p>As LLMs can perform a wide range of tasks, there is a need for multiple metrics on which they should be evaluated. Here, we will discuss a few metrics that are commonly used.</p>
+<h4 id="221-bias-and-fairness">
+  2.2.1. Bias and Fairness
+  <a class="heading-link" href="#221-bias-and-fairness">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Bias is a systematic error that results in an unfair model. In LLMs, this systematic error could result in prejudice against a person or a group of people. Such behaviours are particularly harmful if targeted towards personal attributes, such as gender, race or sexual orientation. For instance, <a href="https://arxiv.org/abs/1608.07187"  class="external-link" target="_blank" rel="noopener">Caliskan et al (2017)</a> highlighted that the European-American names were more closely Associated with pleasant words than the African-American names.</p>
+<figure><img src="http://localhost:1313/blog-img/06-bias.png"><figcaption>
+      <h4>Fig 4: Bias Cycle</h4>
+    </figcaption>
+</figure>
+
+<p>The bias can be originating from various parts of the application, so it is important to evaluate the whole application rather than just the LLM:</p>
+<ul>
+<li><em>LLM bias</em>: Given the input response, how often will the model generate a toxic or biassed response?</li>
+<li><em>System bias</em>: There could be cases where the model itself is fair, but the translation technology it uses is generating incorrect information. For instance, <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3847487#:~:text=In%20Google%20translate%2C%20the%20unequal,have%20various%20activities%20and%20jobs."  class="external-link" target="_blank" rel="noopener">stereotyped genders</a>.</li>
+</ul>
+<p>While the LLMs might have inherent bias which might be difficult to remove, it is also better to have infrastructure around the model with the constraint filters. Such systems can be tested in natural settings, in which they are actually deployed.
+For evaluation, the following bias generation frameworks can be used:</p>
+<ol>
+<li><a href="https://huggingface.co/datasets/stereoset"  class="external-link" target="_blank" rel="noopener">Stereoset</a></li>
+<li><a href="https://github.com/rudinger/winogender-schemas"  class="external-link" target="_blank" rel="noopener">Winogender</a></li>
+<li><a href="https://huggingface.co/datasets/heegyu/bbq"  class="external-link" target="_blank" rel="noopener">Bias Benchmark for QA (BBQ)</a></li>
+<li><a href="https://github.com/allenai/unqover"  class="external-link" target="_blank" rel="noopener">UnQover</a></li>
+</ol>
+<h4 id="222-toxicity">
+  2.2.2. Toxicity
+  <a class="heading-link" href="#222-toxicity">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Toxicity (or neural toxic degeneration) is the generation of rude or disrespectful text. If a LLM is generating such unintended text, it can affect users, which might include young or vulnerable users. </br>
+To evaluate LLMs on toxicity, <a href="https://huggingface.co/datasets/allenai/real-toxicity-prompts"  class="external-link" target="_blank" rel="noopener">Real Toxicity Prompts</a> can be used in cadence with the  <a href="https://perspectiveapi.com/"  class="external-link" target="_blank" rel="noopener">Perspective API</a>, using the following framework:</p>
+<ol>
+<li>Prompt the model k times, and collect the responses.</li>
+<li>Use Perspective API to calculate the score for each generation.</li>
+<li>Report maximum and average toxicity rate over all examples.</li>
+</ol>
+<h4 id="223-factuality">
+  2.2.3. Factuality
+  <a class="heading-link" href="#223-factuality">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Factuality refers to truthfulness of information provided. As the LLMs are increasingly being used for generating text, we would like to eliminate any disinformation they emanate. Despite their impressive open-ended text generation, LLMs, under the hood, rely on statistical correlation between subword tokens, leading to limitation of generation of factually inaccurate information.</p>
+<p>To illustrate the point, sometime back in 2023, I asked ChatGPT to generate a bio of an Indian-Origin Cricketer who plays for New Zealand. But, it provided incorrect information about his country of origin. </br></p>
+<figure><img src="http://localhost:1313/blog-img/06-chatgpt-incorrect-information.png"><figcaption>
+       <h4>Fig 5: Factually incorrect information</h4>
+     </figcaption>
+ </figure>
+
+<p>The evaluation of factuality depends heavily on having correct &ldquo;ground-truth&rdquo; knowledge as a reference. While one can use datasets such as Wiki-Data for evaluation of public information, it becomes increasingly complex and difficult when working on the closed-domain use-cases.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="heading-link" href="#conclusion">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>While LLMs succeed in creating coherent, contextually relevant, and logically consistent narratives or responses without predefined endings or constraints, it is still a challenge to generate outputs that remain factual, reliable and free of toxic content. While there are techniques available to evaluate these metrics, a framework about their use and application is still not available.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2025
+     Arjun Sehajpal 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="http://localhost:1313/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
