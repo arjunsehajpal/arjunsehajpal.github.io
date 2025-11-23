@@ -4,7 +4,6 @@ theme = "hugo-coder"
 languageCode = "en"
 defaultContentLanguage = "en"
 canonifyUrls = true
-colorscheme = "dark"
 
 [pagination]
   pagerSize = 20
@@ -36,6 +35,7 @@ colorscheme = "dark"
     rtl = false
 
     math = true
+    colorScheme = "dark"
     custom_css = ["css/custom.css"]
 
 # Social links
