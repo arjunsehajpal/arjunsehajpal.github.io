@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  Spec-driven Development · Arjun&#39;s Blog
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Arjun Sehajpal">
+<meta name="description" content="Antidote to crisis of vibe-coding">
+<meta name="keywords" content="blog, data science, machine learning, data engineering">
+
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Spec-driven Development">
+  <meta name="twitter:description" content="Antidote to crisis of vibe-coding">
+
+<meta property="og:url" content="http://localhost:1313/posts/08-spec-driven-development/">
+  <meta property="og:site_name" content="Arjun&#39;s Blog">
+  <meta property="og:title" content="Spec-driven Development">
+  <meta property="og:description" content="Antidote to crisis of vibe-coding">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-21T01:19:02+05:30">
+    <meta property="article:modified_time" content="2025-12-21T01:19:02+05:30">
+    <meta property="article:tag" content="Software Development Practices">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/08-spec-driven-development/">
+
+
+<link rel="preload" href="http://localhost:1313/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/coder.css" media="screen">
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="http://localhost:1313/css/coder-dark.css" media="screen">
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="http://localhost:1313/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:1313/img/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="http://localhost:1313/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313/images/apple-touch-icon.png">
+
+<link rel="manifest" href="http://localhost:1313/site.webmanifest">
+<link rel="mask-icon" href="http://localhost:1313/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      Arjun&#39;s Blog
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="http://localhost:1313/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/08-spec-driven-development/">
+              Spec-driven Development
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2025-12-21T01:19:02&#43;05:30">
+                December 21, 2025
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              9-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="http://localhost:1313/tags/software-development-practices/">Software Development Practices</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>The emergence of AI coding agents has fundamentally transformed how the software is developed. They’re no longer a novelty, but a legitimate part of a developer’s toolkit. Though early coding assistants like GitHub Copilot were only able to generate small code snippets and perform completions, as LLMs improved and the context window grew larger, it became easier to generate software directly from natural language instructions. This gave rise to vibe-coding. </br>
+Vibe-coding is great for greenfield use cases, prototyping and creative exploration, but is not equally performant on the existing codebases and legacy systems. This is because vibe-coding treats software development as a series of isolated interactions. This unstructured chain of interactions where one describes a goal, prompts the LLM and repeats until the code “feels right”, has led to proliferation of anti-patterns and code smells.</br>
+To overcome this, we need a coherent process that reasserts the primacy of structured thinking and intentional design. One of the software industry’s more rigorous answers to fill this gap is Spec-driven development (SDD).</br></p>
+<h1 id="philosophy">
+  Philosophy
+  <a class="heading-link" href="#philosophy">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<p>For years, software development has treated code as a protagonist, with spec being a scaffolding that is built and discarded once the real work begins. Spec-driven development inverts this relationship as spec becomes the executable blueprint that directly generates the working implementation. Still in its nascent years, the definition of SDD is in flux. But the core idea is simple: instead of prompting a model with “build authentication”, which forces a coding agent to assume many unstated requirements, the spec provides it with more clarity and improves overall efficiency.</br>
+At the centre of SDD is a spec, which is a contract detailing how code should behave. A spec is a well-crafted software requirement artifact, which an agent can use to generate code.</br>
+Because it is behaviour-oriented, a spec should be written in a language that clearly expresses software functionality and can guide AI coding agents. It often takes the form of GIVEN/WHEN/THEN scenarios. It should cover the critical paths without enumerating every possible edge cases. The spec’s primary job is to aim for clarity and sufficient completeness, but it should be the developer&rsquo;s job to steer the direction, and verify the final code.</br></p>
+<div class="notice info">
+  <div class="notice-title">
+    <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>Info
+  </div>
+  <div class="notice-content"><h4 id="spec-driven-development-vs-context-engineering">
+  Spec-driven Development vs Context Engineering
+  <a class="heading-link" href="#spec-driven-development-vs-context-engineering">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>To provide more context about the code to a coding agent, files such as <code>agents.md</code> are added. It structures the information provided to the coding agent, defining roles, rules and capabilities to curate project context and help the agent perform consistently. But it is not a substitute for the SDD as it doesn’t specify the intended behaviour. So, in other words, despite adding files such as <code>agents.md</code> or <code>projects.md</code>, the code generation will largely remain emergent, with structure as well as intent inferred implicitly rather than defined upfront.</br>
+In practice, SDD and context engineering should be treated as complementary, where the former captures the intended behaviour of the system, while the latter establishes the operating environment for the agent.</p></div>
+</div>
+
+<h1 id="practice">
+  Practice
+  <a class="heading-link" href="#practice">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<p>As discussed earlier, the practice of spec-driven development is still evolving, and there is no single, canonical workflow that defines it. In practice, however, three broad implementation levels tend to emerge across teams adopting SDD. These levels differ in how central the spec is to the development process and how tightly it is coupled to code generation, and represent increasing levels of reliance on the spec as a durable artifact. The three commonly observed paradigms are:</br></p>
+<ol>
+<li><u>Spec-first</u>: a well thought-out spec is written first and then used by the agent to generate code.</li>
+<li><u>Spec-anchored</u>: similar to spec-first, but the spec is maintained even after code is generated, to support future evolution and maintenance of the feature.</li>
+<li><u>Spec-as-source</u>: the spec is the primary source of truth, maintained by the developer. The developer doesn’t directly edit the code, treating it as a derived artifact.</li>
+</ol>
+<p>The above three paradigms mostly differ in how the spec document is maintained and how authoritative it is relative to the code. All these paradigms treat the spec as a central guiding document, not an afterthought. If maintained correctly, the spec becomes a living document that not only captures functional and non-functional requirements, but also the requirements around security policies, compliance requirements, system constraints and integration needs.</br>
+The positive side-effect of maintaining a spec is that it becomes easy to track these organization-wide policies. Rather than being captured in some obscure wiki, these policies become tightly integrated with the code itself.</p>
+<h2 id="workflow">
+  Workflow
+  <a class="heading-link" href="#workflow">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Spec-driven development follows a structured workflow that typically progresses through four stages: specify, plan, task, and implement. Each of these stages produces an artifact that serves as an input to subsequent phases, creating a coherent development progression.</p>
+<h3 id="stage-01-specify">
+  Stage 01: Specify
+  <a class="heading-link" href="#stage-01-specify">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>The process begins with the “specify” stage, where the developer provides a high-level description of the goal. This description may be succinct, for instance, “create a multi-step user registration flow with email verification” or more elaborate. The goal here is to focus on the functional requirement, user needs, and business objectives. </br>
+For a more detailed specification, the developer can include user journeys, and what “success” looks like. A useful way to approach this is by answering a small set of framing questions:</p>
+<ol>
+<li>Who is the user?</li>
+<li>What problem does this feature solve?</li>
+<li>How does the user interact with this feature?</li>
+</ol>
+<p>These questions mark the starting point, failure conditions, boundary conditions and definition of “done”. Once these are in place, developers can engage with the agent to craft a well-defined spec document. The output is a functional specification. Tools like GitHub’s <a href="https://github.com/github/spec-kit"  class="external-link" target="_blank" rel="noopener">Spec-Kit</a> use the <code>/specify</code> command to initiate this interactive drafting session.</p>
+<h3 id="stage-02-plan">
+  Stage 02: Plan
+  <a class="heading-link" href="#stage-02-plan">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>Once the specifications are approved, the Plan phase translates these into a technical implementation strategy. This is where the developers make the architectural decisions and define constraints. This document outlines:</p>
+<ul>
+<li><strong>Technology stack</strong>: document technology choices and their rationales. For instance, “we will use PostgreSQL for ACID compliance and strong performance on the anticipated query patterns.”</li>
+<li><strong>Architectural patterns</strong>: document architectural patterns. For instance, “implement a REST API with layered architecture: controllers handle HTTP requests, services handle business logic, and models handle data models. Dependencies between layers are managed via dependency injection to ensure loose coupling.”</li>
+<li><strong>Implementation standards</strong>: document language-specific standards. For instance, “<code>async/await</code> for asynchronous tasks.”</li>
+<li><strong>Security and compliance specifications</strong>: non-functional requirements are documented explicitly. For instance, “sensitive data is encrypted at rest using AES-256.”</li>
+</ul>
+<p>In addition, this stage may also define data contracts and testing approaches.</br>
+This plan is crucial from the perspective of context engineering. Using this specification, the agent grounds itself in the project’s architecture, significantly reducing hallucinations.</p>
+<h3 id="stage-03-task">
+  Stage 03: Task
+  <a class="heading-link" href="#stage-03-task">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>The task phase takes the plan and decomposes it into small, atomic, and discrete actionable items that can be executed sequentially or in parallel. This phase is critical for maintaining developer momentum and enabling clear progress tracking. The output of this stage is a task list that serves as a stable execution plan for the coding agent.</br>
+This decomposition resembles agile planning practices, but operates within the shorter execution–feedback cycles of LLM-driven development. Explicit task boundaries help prevent agents from oscillating between concerns or revisiting previously completed work.</br>
+A practical guideline at this stage is to size individual tasks so they can be completed by the agent in a single, focused session. Tasks that are too large risk context overflow, while tasks that are too small introduce unnecessary context switching and coordination overhead.</p>
+<h3 id="stage-04-implementation">
+  Stage 04: Implementation
+  <a class="heading-link" href="#stage-04-implementation">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>In the final stage, the coding agent implements tasks according to the defined task list. As code is generated, it is continuously validated against the specification through tests and explicit checks. Automated tests derived from acceptance criteria run immediately, providing feedback on whether the implementation matches the intended behaviour. </br>
+The developer’s role at this stage is to review the output against the spec. If the implementation fails verification, the spec is updated or clarified, and the agent is guided to revise the implementation. This creates a tight feedback loop in which the spec and the software evolve together. </br>
+As the agent encounters errors, these errors and their resolutions can be recorded in a “lessons learned” section of the spec. Over time, this forms a lightweight knowledge base that can be surfaced to the agent in future iterations to help avoid repeating similar issues.</p>
+<h1 id="considerations-and-challenges">
+  Considerations and Challenges
+  <a class="heading-link" href="#considerations-and-challenges">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<p>Spec-driven development has shown considerable promise, especially in zero-to-one use cases, where an entirely new application is built from scratch or a proof of concept is developed. These are also the scenarios where vibe-coding typically excels. However, the most significant impact I have observed from SDD is in N to N+1 use cases, where a new feature is added to an existing application. In such scenarios, developers can scan the codebase and accompanying documentation to generate a sufficiently detailed spec, enabling the implementation of features that remain consistent with the system’s existing architecture.</br>
+While I have not directly worked on large-scale brownfield modernization efforts, where legacy systems are refactored or re-architected, SDD appears promising even in this context. Capturing the essential business logic of a legacy system in a spec can enable the development of new functionality without inheriting existing technical debt.</br>
+That said, SDD is not without challenges. One of the primary issues today is the lack of consensus on what constitutes a “good” spec. Projects such as <a href="https://kiro.dev/"  class="external-link" target="_blank" rel="noopener">Kiro</a> and <a href="https://github.com/github/spec-kit"  class="external-link" target="_blank" rel="noopener">Spec-Kit</a> are actively exploring this space, but the ecosystem is still early, and best practices are far from standardized.</br>
+Another fundamental challenge stems from the nature of LLMs themselves. LLMs are inherently non-deterministic, and regardless of how detailed or well-crafted a spec is, code generation cannot be assumed to be fully reproducible. While this may be acceptable during initial development, it poses meaningful challenges during upgrades, debugging, and long-term maintenance.</br>
+Finally, SDD must contend with the broader industry problem of documentation decay. Without active maintenance, specs risk becoming outdated as the code evolves. If specifications are not updated alongside implementation changes, inaccuracies accumulate, ultimately reducing the spec’s effectiveness as a guiding artifact.</p>
+<h1 id="conclusion">
+  Conclusion
+  <a class="heading-link" href="#conclusion">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<p>The emergence of spec-driven development reflects the maturation of AI-assisted software development from creative experimentation toward a more disciplined engineering practice. By explicitly separating planning from implementation, SDD addresses many of the structural shortcomings of vibe-coding while preserving the productivity gains offered by coding agents. <br>
+While the term itself may not capture public attention in the same way as vibe-coding, the underlying ideas point to a more sustainable path forward. As coding agents become more deeply embedded in real-world software systems, practices that emphasize clarity, intent, and verification are likely to matter far more than novelty.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+        
+        
+      </footer>
+    </article>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,
+      {
+        delimiters: [
+          {left: '$$', right: '$$', display:true},
+          {left: '$', right: '$', display:false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ]
+      }
+    );"></script>
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2025
+     Arjun Sehajpal 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="http://localhost:1313/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
