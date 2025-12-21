@@ -1,5 +1,5 @@
 +++ 
-draft = true
+draft = false
 date = 2025-12-21T01:19:02+05:30
 title = "Spec-driven Development"
 description = "Antidote to crisis of vibe-coding"
