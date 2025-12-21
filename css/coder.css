@@ -10676,9 +10676,9 @@ figure {
   .content article p {
     text-align: justify;
     text-justify: auto;
-    -ms-hyphens: none;
-    -webkit-hyphens: none;
-    hyphens: none; }
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto; }
   .content .post .post-title {
     margin-bottom: 0.75em; }
   .content .post .post-meta i {
