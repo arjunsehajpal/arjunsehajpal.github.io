@@ -8,7 +8,13 @@
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-12-21T01:19:02+05:30</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/software-development-practices/</loc>
+    <lastmod>2025-12-21T01:19:02+05:30</lastmod>
+  </url><url>
     <loc>http://localhost:1313/posts/08-spec-driven-development/</loc>
+    <lastmod>2025-12-21T01:19:02+05:30</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-12-21T01:19:02+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
@@ -18,9 +24,6 @@
     <lastmod>2024-07-08T00:38:16+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/llmops/</loc>
-    <lastmod>2024-07-08T00:38:16+05:30</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-07-08T00:38:16+05:30</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/llm-evaluation-overview/</loc>
