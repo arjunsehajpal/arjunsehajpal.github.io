@@ -36,7 +36,7 @@ canonifyUrls = true
 
     math = true
     colorScheme = "dark"
-    custom_css = ["css/custom.css"]
+    customCSS = ["css/custom.css"]
 
 # Social links
 [[params.social]]
