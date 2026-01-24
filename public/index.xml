@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Arjun&#39;s Blog</title>
+    <title>Arjun Sehajpal</title>
     <link>http://localhost:1313/</link>
-    <description>Recent content on Arjun&#39;s Blog</description>
+    <description>Recent content on Arjun Sehajpal</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 21 Dec 2025 01:19:02 +0530</lastBuildDate>
@@ -16,11 +16,11 @@
       <description>&lt;p&gt;The emergence of AI coding agents has fundamentally transformed how the software is developed. They’re no longer a novelty, but a legitimate part of a developer’s toolkit. Though early coding assistants like GitHub Copilot were only able to generate small code snippets and perform completions, as LLMs improved and the context window grew larger, it became easier to generate software directly from natural language instructions. This gave rise to vibe-coding. &lt;/br&gt;&#xA;Vibe-coding is great for greenfield use cases, prototyping and creative exploration, but is not equally performant on the existing codebases and legacy systems. This is because vibe-coding treats software development as a series of isolated interactions. This unstructured chain of interactions where one describes a goal, prompts the LLM and repeats until the code “feels right”, has led to proliferation of anti-patterns and code smells.&lt;/br&gt;&#xA;To overcome this, we need a coherent process that reasserts the primacy of structured thinking and intentional design. One of the software industry’s more rigorous answers to fill this gap is Spec-driven development (SDD).&lt;/br&gt;&lt;/p&gt;</description>
     </item>
     <item>
-      <title>About</title>
+      <title>Engineer / Tinkerer / Reader</title>
       <link>http://localhost:1313/about/</link>
       <pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/about/</guid>
-      <description>&lt;p&gt;Hi! I am Arjun Sehajpal. I ply my trade as a Staff Machine Learning Engineer at Visa, where I’m building a centralized AI platform that integrates open-source monitoring tools and governance APIs, enabling automated fairness, explainability, and model catalogue workflows.&lt;/br&gt;&lt;/p&gt;&#xA;&lt;p&gt;Before this, I spent almost five years at &lt;a href=&#34;https://www.zs.com/&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ZS&lt;/a&gt; across roles in Data Science and AI Engineering. My work there focused on designing and engineering AI/LLM systems, which included developing internal ML libraries, improving reproducibility and experimentation, and personalization systems.&lt;/br&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;I work on machine learning systems, with a particular interest in what happens to models and infrastructure once they move from prototypes into long-lived, real-world use.&lt;/p&gt;&#xA;&lt;p&gt;Much of my work has taken place in large production environments, where systems have to serve real organizations with real constraints. Over time, my focus has shifted away from individual models and toward the structures around them, including the monitoring, evaluation, and governance practices that make complex systems understandable to the people who depend on them.&lt;/p&gt;</description>
     </item>
     <item>
       <title>LLM Evaluation 02: RAG</title>

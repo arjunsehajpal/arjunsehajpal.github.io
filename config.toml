@@ -1,5 +1,5 @@
 baseurl = "https://arjunsehajpal.com/"
-title = "Arjun's Blog"
+title = "Arjun Sehajpal"
 theme = "hugo-coder"
 languageCode = "en"
 defaultContentLanguage = "en"
@@ -20,8 +20,9 @@ canonifyUrls = true
 [params]
     author = "Arjun Sehajpal"
     info = "Learning to make Machine Learning work in real world"
-    description = "A blog about Data Science and Machine Learning"
-    keywords = "blog, data science, machine learning, data engineering"
+    HeadTitle = "Arjun Sehajpal – Official Website | ML Engineer, AI Systems"
+    description = "Official website of Arjun Sehajpal, Machine Learning Engineer. Writing on AI systems, LLM engineering, distributed systems, and real-world ML."
+    keywords = "Arjun Sehajpal, machine learning engineer, AI systems, LLM engineering, distributed systems"
     avatarurl = "images/avatar.jpg"
 
     favicon_32 = "/img/favicon-32x32.png"

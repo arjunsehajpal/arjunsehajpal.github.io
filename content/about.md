@@ -1,17 +1,18 @@
 +++
-title = "About"
-description = "A bit about myself"
-date = "2025-11-23"
-aliases = ["about-us", "contact"]
+title = "Engineer / Tinkerer / Reader"
+description = "Official bio for Arjun Sehajpal, Machine Learning Engineer."
+slug = "about-arjun-sehajpal"
+url = "/about/"
+aliases = ["about-us", "contact", "about-arjun-sehajpal"]
 author = "Arjun Sehajpal"
+authors = ["Arjun Sehajpal"]
+date = "2025-11-23"
 +++
 
-Hi! I am Arjun Sehajpal. I ply my trade as a Staff Machine Learning Engineer at Visa, where I’m building a centralized AI platform that integrates open-source monitoring tools and governance APIs, enabling automated fairness, explainability, and model catalogue workflows.</br>
+I work on machine learning systems, with a particular interest in what happens to models and infrastructure once they move from prototypes into long-lived, real-world use.
 
-Before this, I spent almost five years at [ZS](https://www.zs.com/) across roles in Data Science and AI Engineering. My work there focused on designing and engineering AI/LLM systems, which included developing internal ML libraries, improving reproducibility and experimentation, and personalization systems.</br>
+Much of my work has taken place in large production environments, where systems have to serve real organizations with real constraints. Over time, my focus has shifted away from individual models and toward the structures around them, including the monitoring, evaluation, and governance practices that make complex systems understandable to the people who depend on them.
 
-Prior to ZS, I worked at [Pluto7](https://pluto7.com/) as a Data Scientist on Demand Forecasting and Supply Chain Optimization use-cases using time-series modelling and scalable data pipelines.</br>
+I tend to be drawn to the unglamorous parts of engineering, such as reproducibility, maintenance, documentation, and the slow work of turning one-off solutions into things that can survive beyond their original authors.
 
-I’ve mostly worked on structured data systems and ML system design, and have steadily moved deeper into LLMs, infrastructure, and AI engineering.</br>
-
-Outside work, I spend my time [reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading), practicing yoga, and slowly becoming a calmer, more deliberate person.
+Outside of work, I spend a lot of time [reading](https://www.goodreads.com/review/list/67593244-arjun-sehajpal?shelf=currently-reading), practicing yoga, and trying to become a slightly more deliberate person than I was the day before.
