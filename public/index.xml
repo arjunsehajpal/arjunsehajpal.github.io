@@ -6,8 +6,15 @@
     <description>Recent content on Arjun Sehajpal</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 21 Dec 2025 01:19:02 +0530</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2026 16:29:55 +0530</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Context Engineering for Agents</title>
+      <link>http://localhost:1313/posts/07-context-engineering-for-agents/</link>
+      <pubDate>Sun, 03 May 2026 16:29:55 +0530</pubDate>
+      <guid>http://localhost:1313/posts/07-context-engineering-for-agents/</guid>
+      <description>&lt;p&gt;When the long context came into being, there was a lot of excitement around them. It killed the excitement around RAG and pumped the hype for MCPs. Of what use is the carefully crafted RAG pipeline to fetch the best document when one can put every document in the context itself. The Frontier Model Labs latched onto the trend. &lt;a href=&#34;https://x.ai/news/grok-4-1-fast&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Grok 4.1 was launched with a 2 million context window&lt;/a&gt; which made the Gemini 1 million context window look rather ordinary. But these numbers say more about how much text the LLMs can process without breaking. There’s no guarantee that all the context present in such a large window would be actively reasoned. Chroma published a technical report explaining this, naming this phenomenon as &lt;a href=&#34;https://www.trychroma.com/research/context-rot&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Context Rot&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Spec-driven Development</title>
       <link>http://localhost:1313/posts/08-spec-driven-development/</link>
