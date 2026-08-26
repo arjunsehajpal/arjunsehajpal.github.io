@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Arjun Sehajpal</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 04 Jun 2026 16:29:55 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 07:16:37 +0530</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harness Engineering: The Rise of ChatGPT Wrapper</title>
+      <link>http://localhost:1313/posts/11-harness-engineering/</link>
+      <pubDate>Tue, 25 Aug 2026 07:16:37 +0530</pubDate>
+      <guid>http://localhost:1313/posts/11-harness-engineering/</guid>
+      <description>&lt;p&gt;The “ChatGPT wrapper” was a much-maligned term of 2023. Any tool or product built on top of frontier LLMs to provide a tailor-made solution for a problem, was dismissed under this moniker. But this product development strategy has resurfaced itself in 2026 under the guise of Harness Engineering, and pretty much changed how the interaction layer between humans and LLMs is perceived.&lt;/p&gt;&#xA;&lt;p&gt;The &lt;a href=&#34;https://simonwillison.net/2026/Jan/4/inflection/&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;inflection point&lt;/a&gt; was release agents like OpenClaw and Pi built on top of models like Claude Opus 4.5, when models became intelligent enough to call the correct tools, and harness matured enough to provide them with the correct set of tools and information.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Context Engineering for Agents</title>
       <link>http://localhost:1313/posts/07-context-engineering-for-agents/</link>
